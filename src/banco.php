@@ -3,11 +3,17 @@
 
 require_once 'C:\Estudo\php\orientacaoObjetoPHP\src\Conta.php';
 
-$primeiraConta = new Conta();
+$primeiraConta = new Conta('123.456.789-10', 'Igor Teles');
+var_dump($primeiraConta);
 $primeiraConta->deposita(500);
 $primeiraConta->saca (300); //isso é ok
-$primeiraConta->defineCpfTitular('123.456.789-10');
 
-echo $primeiraConta->recuperaSaldo();
-echo $primeiraConta->recuperaCpfTitular();
+echo $primeiraConta->recuperaNomeTitular() . PHP_EOL;
+echo $primeiraConta->recuperaCpfTitular() . PHP_EOL;
+echo $primeiraConta->recuperaSaldo() . PHP_EOL;
+
+$segundaConta = new Conta('987.654.321.-10', 'Patricia');
+var_dump($segundaConta);
+
+echo Conta::recuperaNumeroDeContas();
 
