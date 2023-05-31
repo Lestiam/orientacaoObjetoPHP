@@ -23,6 +23,14 @@ class Conta //é o modelo para criar novos objetos (ou instancias (são sinonimo
     //posso chamar "nome da classe atual" atraves da palavra self
 }
 
+public function __destruct() //método para destruir, destroi a conta da memoria, como se fosse o garbage colector
+{
+    self::$numeroDeContas--;
+//    if (self::$numeroDeContas > 2) {
+//        echo "Há mais de uma conta ativa" . PHP_EOL;
+//    }
+}
+
     public function saca(float $valorASacar)
     {
         if ($valorASacar > $this->saldo) {
@@ -90,6 +98,6 @@ class Conta //é o modelo para criar novos objetos (ou instancias (são sinonimo
 
     public static function recuperaNumeroDeContas() : int
     {
-        return self::$numeroDeContas; //imprime na tela o numero de contas
+        return self::$numeroDeContas . PHP_EOL; //imprime na tela o numero de contas
     }
 }

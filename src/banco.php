@@ -15,5 +15,7 @@ echo $primeiraConta->recuperaSaldo() . PHP_EOL;
 $segundaConta = new Conta('987.654.321.-10', 'Patricia');
 var_dump($segundaConta);
 
-echo Conta::recuperaNumeroDeContas();
+$novaConta = new Conta('132456495123', 'haduhsaudunasu');
 
+unset($segundaConta); //destroi essa variavel / objeto
+echo Conta::recuperaNumeroDeContas() . PHP_EOL;
