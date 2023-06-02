@@ -5,7 +5,7 @@ class Titular
     private Cpf $cpf;
     private string $nome;
 
-    public function __construct(Cpf $cpf, string $nome) //digito __ e a IDE já me auxilia nos métodos
+    public function __construct(Cpf $cpf, string $nome)
     {
         $this->cpf = $cpf;
         $this->validaNomeTitular($nome);
@@ -22,9 +22,9 @@ class Titular
         return $this->nome;
     }
 
-    private function validaNomeTitular(string $nomeTitular) //private pq só a conta precisa ter acesso a esse método
+    private function validaNomeTitular(string $nomeTitular)
     {
-        if (strlen($nomeTitular) < 5) {//strlen conta a quantidade de caracteres
+        if (strlen($nomeTitular) < 5) {
             echo "Nome precisa ter pelo menos 5 caracteres";
             exit();
         }

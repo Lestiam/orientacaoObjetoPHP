@@ -1,42 +1,35 @@
 <?php
-//a palavra new é utilizada para criar um objeto, e devolve o endereço dele
 
-//this acessa a instancia
-
-class Conta //é o modelo para criar novos objetos (ou instancias (são sinonimos))
+class Conta
 {
-    //definir os dados da conta; a variavel possui um endereço que aponta para cá (Objeto Conta)
 
-    private Titular $titular; //é chamado de composição de objetos
-    private float $saldo; // "->" acesso o atributo dessa conta, toda conta vai começar com valor inicial = 0
-    private static $numeroDeContas = 0; //é um atributo da forma em si, é um atributo da classe conta em geral, porque se ele não fosse statico, seria um atributo de cada new Conta gerada, e aí, o número de contas sempre seria 1
+
+    private Titular $titular;
+    private float $saldo;
+    private static $numeroDeContas = 0;
 
     public function __construct(Titular $titular)
     {
-//    $this->cpfTitular = $cpfTitular;
-//    $this->validaNomeTitular($nomeTitular); //função para validar se o nome do titular tem pelo menos 5 caracteres dentro do proprio construtor
-//    $this->nomeTitular = $nomeTitular;
+
         $this->titular = $titular;
         $this->saldo = 0;
 
-        self::$numeroDeContas++; //a cada conta criada, o numero de contas aumenta; Atraves de o nome da classe mais "::", eu consigo acessar os atributos e métodos estaticos da classe
-        //posso chamar "nome da classe atual" atraves da palavra self
+        self::$numeroDeContas++;
+
     }
 
-    public function __destruct() //método para destruir, destroi a conta da memoria, como se fosse o garbage colector
+    public function __destruct()
     {
         self::$numeroDeContas--;
-//    if (self::$numeroDeContas > 2) {
-//        echo "Há mais de uma conta ativa" . PHP_EOL;
-//    }
+
     }
 
     public function saca(float $valorASacar)
     {
         if ($valorASacar > $this->saldo) {
             echo "Saldo indisponível";
-            return; //se eu coloco um return em baixo do if, ele vai mostrar a mensagem do echo e parar a execução. Ou seja, tudo o que vier fora desse if é porque deu certo, já que ele não vai entrar no if
-            //isso é chamado de early return, ele deixa o codigo mais legivel e ainda deixa o codigo mais rapido, pois não precisa entrar em cada verificação do if, else if e else
+            return;
+
         }
 
         $this->saldo -= $valorASacar;
@@ -52,16 +45,16 @@ class Conta //é o modelo para criar novos objetos (ou instancias (são sinonimo
         $this->saldo += $valorADepositar;
     }
 
-    //$contaUm->transferir(200, $contaDois);
-    public function transfere(float $valorATransferir, Conta $contaDestino): void //digita pubf que o PHP storm já cria uma função publica
+
+    public function transfere(float $valorATransferir, Conta $contaDestino): void
     {
         if ($valorATransferir > $this->saldo) {
             echo "Saldo indisponível";
             return;
         }
 
-        $this->sacar($valorATransferir); //pega o valor da conta atual
-        $contaDestino->depositar($valorATransferir); //transfere para outra conta
+        $this->sacar($valorATransferir);
+        $contaDestino->depositar($valorATransferir);
     }
 
     public function recuperaSaldo(): float
@@ -81,6 +74,6 @@ class Conta //é o modelo para criar novos objetos (ou instancias (são sinonimo
 
     public static function recuperaNumeroDeContas(): int
     {
-        return self::$numeroDeContas . PHP_EOL; //imprime na tela o numero de contas
+        return self::$numeroDeContas . PHP_EOL;
     }
 }
