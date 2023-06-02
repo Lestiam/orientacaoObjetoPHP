@@ -7,29 +7,29 @@ class Conta //é o modelo para criar novos objetos (ou instancias (são sinonimo
 {
     //definir os dados da conta; a variavel possui um endereço que aponta para cá (Objeto Conta)
 
-    private string $cpfTitular;
-    private string $nomeTitular;
+    private Titular $titular; //é chamado de composição de objetos
     private float $saldo; // "->" acesso o atributo dessa conta, toda conta vai começar com valor inicial = 0
     private static $numeroDeContas = 0; //é um atributo da forma em si, é um atributo da classe conta em geral, porque se ele não fosse statico, seria um atributo de cada new Conta gerada, e aí, o número de contas sempre seria 1
 
-    public function __construct(string $cpfTitular, string $nomeTitular)
-{
-    $this->cpfTitular = $cpfTitular;
-    $this->validaNomeTitular($nomeTitular); //função para validar se o nome do titular tem pelo menos 5 caracteres dentro do proprio construtor
-    $this->nomeTitular = $nomeTitular;
-    $this->saldo = 0;
+    public function __construct(Titular $titular)
+    {
+//    $this->cpfTitular = $cpfTitular;
+//    $this->validaNomeTitular($nomeTitular); //função para validar se o nome do titular tem pelo menos 5 caracteres dentro do proprio construtor
+//    $this->nomeTitular = $nomeTitular;
+        $this->titular = $titular;
+        $this->saldo = 0;
 
-    self::$numeroDeContas++; //a cada conta criada, o numero de contas aumenta; Atraves de o nome da classe mais "::", eu consigo acessar os atributos e métodos estaticos da classe
-    //posso chamar "nome da classe atual" atraves da palavra self
-}
+        self::$numeroDeContas++; //a cada conta criada, o numero de contas aumenta; Atraves de o nome da classe mais "::", eu consigo acessar os atributos e métodos estaticos da classe
+        //posso chamar "nome da classe atual" atraves da palavra self
+    }
 
-public function __destruct() //método para destruir, destroi a conta da memoria, como se fosse o garbage colector
-{
-    self::$numeroDeContas--;
+    public function __destruct() //método para destruir, destroi a conta da memoria, como se fosse o garbage colector
+    {
+        self::$numeroDeContas--;
 //    if (self::$numeroDeContas > 2) {
 //        echo "Há mais de uma conta ativa" . PHP_EOL;
 //    }
-}
+    }
 
     public function saca(float $valorASacar)
     {
@@ -64,39 +64,22 @@ public function __destruct() //método para destruir, destroi a conta da memoria
         $contaDestino->depositar($valorATransferir); //transfere para outra conta
     }
 
-    /**
-     * @return string
-     */
-    public function recuperaCpfTitular(): string
-    {
-        return $this->cpfTitular;
-    }
-
-    /**
-     * @return string
-     */
-    public function recuperaNomeTitular(): string
-    {
-        return $this->nomeTitular;
-    }
-
-    /**
-     * @return float
-     */
     public function recuperaSaldo(): float
     {
         return $this->saldo;
     }
 
-    private function validaNomeTitular(string $nomeTitular) //private pq só a conta precisa ter acesso a esse método
+    public function recuperaNomeTitular(): string
     {
-        if (strlen($nomeTitular) < 5) {//strlen conta a quantidade de caracteres
-            echo "Nome precisa ter pelo menos 5 caracteres";
-            exit();
-        }
+        return $this->titular->recuperaNome();
     }
 
-    public static function recuperaNumeroDeContas() : int
+    public function recuperaCpfTitular(): string
+    {
+        return $this->titular->recuperaCpf();
+    }
+
+    public static function recuperaNumeroDeContas(): int
     {
         return self::$numeroDeContas . PHP_EOL; //imprime na tela o numero de contas
     }
